@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../pages/Home.vue'
-import NotFound from '../pages/NotFound.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../pages/Home.vue';
+import NotFound from '../pages/NotFound.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -27,7 +27,7 @@ const routes = [
       {
         path: 'procedure',
         name: 'Procedure',
-        component: () => import(/* webpackChunkName: "about" */ '../pages/Procedure.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../components/TheProcedureTab.vue')
       }
     ]
   },
@@ -36,12 +36,12 @@ const routes = [
     name: '404',
     component: NotFound
   }
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;
