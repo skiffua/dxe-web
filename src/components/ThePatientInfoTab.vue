@@ -1,22 +1,27 @@
 <template>
   <b-container fluid>
     <p class="mb-2"><strong>Procedures</strong></p>
-    <b-row>
+
+    <div class="text-center" v-if="isLoading">
+      <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
+    </div>
+
+    <b-row v-else-if="!isLoading && this.form.patientId">
       <b-col md="3" class="px-0">
         <b-list-group>
           <b-list-group-item class="d-flex justify-content-between align-items-center">
-            Cras justo odio
-            <b-badge variant="primary" pill>14</b-badge>
+            Procedures
+            <b-badge variant="primary" pill>{{ form.procedures.length }}</b-badge>
           </b-list-group-item>
 
           <b-list-group-item class="d-flex justify-content-between align-items-center">
-            Dapibus ac facilisis in
-            <b-badge variant="primary" pill>2</b-badge>
+            Visiting
+            <b-badge variant="primary" pill>{{ form.visiting}}</b-badge>
           </b-list-group-item>
 
           <b-list-group-item class="d-flex justify-content-between align-items-center">
-            Morbi leo risus
-            <b-badge variant="primary" pill>1</b-badge>
+            Operations
+            <b-badge variant="primary" pill>{{ form.operations }}</b-badge>
           </b-list-group-item>
         </b-list-group>
       </b-col>
@@ -105,32 +110,83 @@
         </b-form>
       </b-col>
     </b-row>
+
+    <div v-else>
+      {{ error }}
+    </div>
   </b-container>
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import Vue from 'vue';
+
+    import { Patient } from '@/models/patients';
+    import states from '../../public/mock/usa_states.json';
+
+    interface PatientForm {
+        form: Patient;
+        states: Array<Record<'text' | 'value', string | null> | string>;
+        isLoading: boolean;
+        error: string;
+    }
+
+    export default Vue.extend({
         name: 'ThePatientInfoTab',
-        data () {
+        data (): PatientForm {
             return {
                 form: {
+                    patientId: null,
                     email: '',
                     phone: '',
+                    name: '',
                     address: '',
                     address2: '',
                     city: '',
-                    state: null,
+                    state: '',
                     zip: '',
-                    garantor: false
+                    garantor: false,
+                    procedures: [],
+                    visiting: null,
+                    operations: null
                 },
-                states: [{ text: 'Chose...', value: null }, 'Alabama', 'Illinois', 'Virginia', 'Nevada']
+                states: [{ text: 'Chose...', value: null }, ...states.states],
+                isLoading: true,
+                error: 'Cannot get patient information, try to reload page ;)'
             };
         },
+        created () {
+            const patientCurrent = this.findPatient();
+            setTimeout(() => {
+                if (patientCurrent) {
+                    this.form = patientCurrent;
+                } else {
+                    this.error = 'There is no such patient or bad URI';
+                }
+                this.isLoading = false;
+            }, 2000);
+        },
         methods: {
-            onSubmit (evt) {
+            findPatient (): Patient | null {
+                const patientId = Number.parseInt(this.$route.params.id);
+
+                if (isNaN(patientId)) {
+                    return null;
+                }
+
+                if (this.$store.state.patients.length) {
+                    const patientById = this.$store.state.patients.find((patient: Patient) =>
+                        patientId === patient.patientId
+                    );
+                    return (patientById !== undefined) ? patientById : null;
+                } else {
+                    return null;
+                }
+            },
+
+            onSubmit (evt: Event) {
                 evt.preventDefault();
                 alert(JSON.stringify(this.form));
             }
         }
-    };
+    });
 </script>

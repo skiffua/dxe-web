@@ -10,9 +10,8 @@
   </div>
 </template>
 
-<script>
-    import ThePatientInfoTab from '../components/ThePatientInfoTab';
-    import TheProcedureTab from '../components/TheProcedureTab';
+<script lang="ts">
+    import { ThePatientInfoTab, TheProcedureTab } from '@/components/';
 
     export default {
         name: 'Patient',
@@ -22,7 +21,3 @@
         }
     };
 </script>
-
-<style scoped>
-
-</style>
