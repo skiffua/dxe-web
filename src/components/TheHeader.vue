@@ -11,7 +11,6 @@
           <b-nav-item to="/patients" active-class="active">Patients</b-nav-item>
         </b-navbar-nav>
 
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input size="sm" class="mr-sm-2" placeholder="Patient search"></b-form-input>
@@ -28,7 +27,5 @@
     import { Component, Vue } from 'vue-property-decorator';
 
     @Component
-    export default class Header extends Vue {};
+    export default class TheHeader extends Vue {};
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->

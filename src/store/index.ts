@@ -1,15 +1,18 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { Store } from 'vuex';
+
+import { Patient, Patients } from '@/models/patients';
+
+import patientsMock from '../../public/mock/patients.json';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const patients: Patient[] = [...patientsMock];
+
+const store: Store<Patients> = new Store({
   state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
+    patients: patients
   }
 });
+
+export default store;

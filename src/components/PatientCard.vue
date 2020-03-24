@@ -1,24 +1,39 @@
 <template>
   <b-card
-    title="Patient name"
-    tag="article"
-    style="max-width:22rem; min-width: 15rem;"
-    class="mb-2"
+    no-body
+    style="min-width: 15rem;"
+    class="h-100"
   >
-    <b-card-text>
-      Patient procedure for today
-    </b-card-text>
-
-    <b-button to="/patient/:6" variant="primary">Review</b-button>
+    <b-card-body class="d-flex flex-column">
+      <b-card-title>{{ this.name }}</b-card-title>
+      <b-card-text>
+        {{ procedureCurrent ? procedureCurrent : 'Patient has no procedure for today' }}
+      </b-card-text>
+      <b-button-group class="mt-auto d-block">
+        <b-row>
+          <b-col md="6" >
+            <b-button :to="patientUri" variant="primary" class="w-100" >Review</b-button>
+          </b-col>
+        </b-row>
+      </b-button-group>
+    </b-card-body>
   </b-card>
 </template>
 
-<script>
-    export default {
-        name: 'PatientCard'
-    };
+<script lang="ts">
+    import Vue from 'vue';
+
+    export default Vue.extend({
+        name: 'PatientCard',
+        computed: {
+            patientUri (): string {
+                return '/patient/' + this.patientId.toString();
+            }
+        },
+        props: {
+            patientId: Number,
+            name: String,
+            procedureCurrent: String
+        }
+    });
 </script>
-
-<style scoped>
-
-</style>
