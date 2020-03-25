@@ -22,12 +22,13 @@
 
 <script lang="ts">
     import Vue from 'vue';
+    import { ROUTES } from '@/constants/routes';
 
     export default Vue.extend({
         name: 'PatientCard',
         computed: {
             patientUri (): string {
-                return '/patient/' + this.patientId.toString();
+                return ROUTES.PATIENT.concat(this.patientId.toString());
             }
         },
         props: {
