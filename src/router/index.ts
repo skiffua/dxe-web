@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import Home from '../pages/Home.vue';
 import NotFound from '../pages/NotFound.vue';
 
+import { ROUTES } from '@/constants/routes';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -12,24 +14,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/patients',
+    path: ROUTES.PATIENTS,
     name: 'Patients',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../pages/Patients.vue')
   },
   {
-    path: '/patient/:id',
+    path: ROUTES.PATIENT_ID,
     name: 'Patient',
-    component: () => import(/* webpackChunkName: "about" */ '../pages/Patient.vue'),
-    children: [
-      {
-        path: 'procedure',
-        name: 'Procedure',
-        component: () => import(/* webpackChunkName: "about" */ '../components/TheProcedureTab.vue')
-      }
-    ]
+    component: () => import(/* webpackChunkName: "about" */ '../pages/Patient.vue')
   },
   {
     path: '*',

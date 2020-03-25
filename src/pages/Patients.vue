@@ -49,7 +49,7 @@
 </script>
 
 <template>
-  <b-container class="my-3">
+  <b-container fluid class="my-3">
 
     <div class="text-center" v-if="isLoading">
       <b-spinner variant="primary" type="grow" label="Spinning"></b-spinner>
