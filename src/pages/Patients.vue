@@ -58,7 +58,6 @@
     <b-row
       cols-md="3"
       cols-sm="2"
-      class="justify-content-between"
       v-else-if="patients.length"
     >
       <b-col
