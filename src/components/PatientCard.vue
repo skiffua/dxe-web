@@ -28,7 +28,7 @@
         name: 'PatientCard',
         computed: {
             patientUri (): string {
-                return ROUTES.PATIENT.concat(this.patientId.toString());
+                return ROUTES.PATIENT.concat('/', this.patientId.toString());
             }
         },
         props: {
